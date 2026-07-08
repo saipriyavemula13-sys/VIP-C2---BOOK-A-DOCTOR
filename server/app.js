@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const bcrypt = require('bcryptjs');
 const connectDB = require('./config/db');
+const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const doctorRoutes = require('./routes/doctorRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
@@ -33,8 +35,27 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
+const ensureAdminUser = async () => {
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@bookadoctor.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@1234';
+
+  const existingAdmin = await User.findOne({ email: adminEmail.toLowerCase() });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+    await User.create({
+      name: 'System Admin',
+      email: adminEmail.toLowerCase(),
+      password: hashedPassword,
+      phone: '0000000000',
+      role: 'admin',
+    });
+    console.log(`Seeded admin account: ${adminEmail}`);
+  }
+};
+
 const startServer = async () => {
   await connectDB();
+  await ensureAdminUser();
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });

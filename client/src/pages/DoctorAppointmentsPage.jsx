@@ -49,6 +49,7 @@ const DoctorAppointmentsPage = () => {
                   <td>{appointment.status}</td>
                   <td>
                     <button className="btn btn-sm btn-success me-2" onClick={() => handleStatus(appointment._id, 'confirmed')}>Confirm</button>
+                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleStatus(appointment._id, 'completed')} disabled={appointment.status !== 'confirmed'}>Complete</button>
                     <button className="btn btn-sm btn-danger" onClick={() => handleStatus(appointment._id, 'rejected')}>Reject</button>
                   </td>
                 </tr>

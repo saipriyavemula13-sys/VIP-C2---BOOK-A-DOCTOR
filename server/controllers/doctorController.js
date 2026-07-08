@@ -64,7 +64,9 @@ const doctorDashboard = async (req, res) => {
   const doctor = await Doctor.findOne({ email: req.user.email });
   if (!doctor) return res.status(404).json({ message: 'Doctor profile not found' });
 
-  const appointments = await Appointment.find({ doctorId: doctor._id }).sort({ appointmentDate: 1 });
+  const appointments = await Appointment.find({ doctorId: doctor._id })
+    .sort({ appointmentDate: 1 })
+    .populate('patientId', 'name email phone');
   res.json({ doctor, appointments });
 };
 

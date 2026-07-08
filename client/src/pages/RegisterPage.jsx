@@ -40,7 +40,7 @@ const RegisterPage = () => {
               </div>
               <div className="mt-3"><label className="form-label">Email</label><input type="email" name="email" className="form-control" value={form.email} onChange={handleChange} required /></div>
               <div className="mt-3"><label className="form-label">Password</label><input type="password" name="password" className="form-control" value={form.password} onChange={handleChange} required /></div>
-              <div className="mt-3"><label className="form-label">Role</label><select name="role" className="form-select" value={form.role} onChange={handleChange}><option value="patient">Patient</option><option value="doctor">Doctor</option></select></div>
+              <div className="mt-3"><label className="form-label">Role</label><select name="role" className="form-select" value={form.role} onChange={handleChange}><option value="patient">Patient</option><option value="doctor">Doctor</option><option value="admin">Admin</option></select></div>
               <button className="btn btn-primary mt-4" disabled={loading}>{loading ? 'Creating account...' : 'Register'}</button>
             </form>
           </div>

@@ -83,7 +83,7 @@ const deleteAppointment = async (req, res) => {
     return res.status(403).json({ message: 'You cannot cancel this appointment' });
   }
 
-  await appointment.remove();
+  await Appointment.findByIdAndDelete(req.params.id);
   res.json({ message: 'Appointment cancelled' });
 };
 

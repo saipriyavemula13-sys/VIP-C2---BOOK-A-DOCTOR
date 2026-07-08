@@ -48,6 +48,12 @@ const DoctorDetailsPage = () => {
   if (loading) return <Spinner />;
   if (!doctor) return <p>Doctor not found.</p>;
 
+  const formattedFee = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(doctor.consultationFee || 0);
+
   return (
     <div className="row gy-4">
       <div className="col-lg-7">
@@ -62,7 +68,7 @@ const DoctorDetailsPage = () => {
                 <span className="badge bg-secondary">{doctor.experience || 0} yrs exp</span>
               </div>
               <p className="mb-1"><strong>Hospital:</strong> {doctor.hospital || 'N/A'}</p>
-              <p className="mb-0"><strong>Fee:</strong> ${doctor.consultationFee || 0}</p>
+              <p className="mb-0"><strong>Fee:</strong> {formattedFee}</p>
             </div>
           </div>
 
